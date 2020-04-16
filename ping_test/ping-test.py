@@ -30,14 +30,14 @@ def cli(url):
     if url == 'use text file':
         url_list = []
         with open('url_list.txt') as f:
-            print('using text file input')
+            print('\nusing text file input\n')
             for line in f.readlines():
                 url_list.append(line.rstrip())
     else:
         url_list = url.split(',')
 
     for item in url_list:
-        print(f'\n{item}')
+        print(f'{item}')
         response_list = ping(item)
         print(f'  min rtt is: {response_list.rtt_min_ms} ms')
         print(f'  avg rtt is: {response_list.rtt_avg_ms} ms')

@@ -1,2 +1,4 @@
 www.paloaltonetworks.com
 www.google.com
+us-south-pansekwe.gpjjgnccyyg.gw.lab.gpcloudservice.com
+us-east-g-pansekwe.gpjjgnccyyg.gw.lab.gpcloudservice.com
