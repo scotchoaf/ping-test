@@ -22,7 +22,7 @@ import os
 
 @click.command()
 @click.option("-url", "--url", help="url list to ping", type=str,
-              default="www.google.com")
+              default="use text file")
 
 def cli(url):
     """
@@ -32,8 +32,8 @@ def cli(url):
     # creating the jinja context from the skillet vars
     url_list = url.split(',')
 
-    for host in url_list:
-        os.system('ping ' + host)
+    if url_list == 'use text file':
+        print('reading text file')
 
     for item in url_list:
         print(f'\n{item}')
@@ -44,6 +44,3 @@ def cli(url):
 
 if __name__ == '__main__':
     cli()
-
-
-
