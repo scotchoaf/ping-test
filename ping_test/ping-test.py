@@ -17,8 +17,6 @@
 
 import click
 from pythonping import ping
-import os
-
 
 @click.command()
 @click.option("-url", "--url", help="url list to ping", type=str,
@@ -29,11 +27,14 @@ def cli(url):
     process a list of URLs and get ping results
     """
 
-    # creating the jinja context from the skillet vars
-    url_list = url.split(',')
-
-    if url_list == 'use text file':
-        print('reading text file')
+    if url == 'use text file':
+        url_list = []
+        with open('url_list.txt') as f:
+            print('using text file input')
+            for line in f.readlines():
+                url_list.append(line.rstrip())
+    else:
+        url_list = url.split(',')
 
     for item in url_list:
         print(f'\n{item}')
