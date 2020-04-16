@@ -35,6 +35,7 @@ def cli(url):
                 url_list.append(line.rstrip())
     else:
         url_list = url.split(',')
+        print('\n')
 
     for item in url_list:
         print(f'{item}')
