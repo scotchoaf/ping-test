@@ -1,0 +1,38 @@
+# skillet preamble information used by panhandler
+# ---------------------------------------------------------------------
+# unique snippet name
+name: ping_test_concept
+# label used for menu selection
+label: ping URLs to get response results
+description: ping a list or URLS to get min/max/avg response times
+type: python
+
+# grouping of like snippets for dynamic menu creation in panhandler
+labels:
+  collection:
+    - Prisma Access
+
+# ---------------------------------------------------------------------
+# end of preamble section
+
+# variables section
+
+variables:
+  - name: url_list
+    description: list of URLs to ping
+    default: []
+    type_hint: list
+
+
+# ---------------------------------------------------------------------
+# end of variables section
+
+# snippets section
+# ---------------------------------------------------------------------
+snippets:
+  - name: ping_test
+    file: ping_test.py
+    input_type: cli
+
+# ---------------------------------------------------------------------
+# end of snippets section
