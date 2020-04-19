@@ -41,9 +41,10 @@ def cli(input_type, file_name, url_list):
 
     for target in ping_list:
         try:
-            response = subprocess.check_output(
+            response = subprocess.run(
                 ['ping', '-c', '5', target],
-                stderr=subprocess.STDOUT,  # get all output
+               # stderr=subprocess.STDOUT,  # get all output
+                capture_output=True, # get all output
                 shell=False, # allow to work in docker container
                 universal_newlines=True  # return string not bytes
             )
@@ -51,23 +52,29 @@ def cli(input_type, file_name, url_list):
         except subprocess.CalledProcessError:
             response = None
 
+        response_output = str(response)
         print(f'{target}')
 
-        if response:
+        if response.returncode == 0:
             response_rtt = {}
             # this is a manual parse of the ping response message getting the min/avg/max output
             # there may be dependencies on the output view based on OS
-            response_rtt['min'] = (response.split(' = ')[1].split(' '))[0].split('/')[0]
-            response_rtt['avg'] = (response.split(' = ')[1].split(' '))[0].split('/')[1]
-            response_rtt['max'] = (response.split(' = ')[1].split(' '))[0].split('/')[2]
+            response_rtt['min'] = (response_output.split(' = ')[1].split(' '))[0].split('/')[0]
+            response_rtt['avg'] = (response_output.split(' = ')[1].split(' '))[0].split('/')[1]
+            response_rtt['max'] = (response_output.split(' = ')[1].split(' '))[0].split('/')[2]
 
             print(f"  min rtt is: {response_rtt['min']} ms")
             print(f"  avg rtt is: {response_rtt['avg']} ms")
             print(f"  max rtt is: {response_rtt['max']} ms\n")
 
-        else:
-            print('  no response due to bad target or ping timeout\n')
+        elif response.returncode == 2:
+            print('  Error: request timeouts occurred')
 
+        elif response.returncode == 68:
+            print(response.stderr)
+
+        else:
+            print(' Error processing pings. Check inputs')
 
 
 if __name__ == '__main__':
