@@ -44,6 +44,7 @@ def cli(input_type, file_name, url_list):
             response = subprocess.check_output(
                 ['ping', '-c', '5', target],
                 stderr=subprocess.STDOUT,  # get all output
+                shell=False, # allow to work in docker container
                 universal_newlines=True  # return string not bytes
             )
 
@@ -56,9 +57,9 @@ def cli(input_type, file_name, url_list):
             response_rtt = {}
             # this is a manual parse of the ping response message getting the min/avg/max output
             # there may be dependencies on the output view based on OS
-            response_rtt['min'] = (response.split('stddev = ')[1].split(' '))[0].split('/')[0]
-            response_rtt['avg'] = (response.split('stddev = ')[1].split(' '))[0].split('/')[1]
-            response_rtt['max'] = (response.split('stddev = ')[1].split(' '))[0].split('/')[2]
+            response_rtt['min'] = (response.split(' = ')[1].split(' '))[0].split('/')[0]
+            response_rtt['avg'] = (response.split(' = ')[1].split(' '))[0].split('/')[1]
+            response_rtt['max'] = (response.split(' = ')[1].split(' '))[0].split('/')[2]
 
             print(f"  min rtt is: {response_rtt['min']} ms")
             print(f"  avg rtt is: {response_rtt['avg']} ms")

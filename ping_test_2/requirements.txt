@@ -1,2 +1,1 @@
 click==7.1.1
-pythonping==1.0.9
