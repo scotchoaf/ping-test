@@ -45,9 +45,6 @@ def cli(input_type, file_name, url_list):
                 ['ping', '-c', '5', target],
                 stdout=subprocess.PIPE,  # get all output
                 stderr=subprocess.PIPE
-                #capture_output=True, # get all output but only works for python >= 3.7
-                #shell=False, # allow to work in docker container
-                #universal_newlines=True  # return string not bytes
             )
 
         except subprocess.CalledProcessError:
