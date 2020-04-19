@@ -19,8 +19,6 @@ labels:
 
 # variables section
 
-input_type, file_name, url_list
-
 variables:
   - name: input_type
     description: select to use entered list or file input for the ping targets
