@@ -5,7 +5,7 @@ name: ping_test_concept
 # label used for menu selection
 label: ping URLs to get response results
 description: ping a list or URLS to get min/max/avg response times
-type: python
+type: python3
 
 # grouping of like snippets for dynamic menu creation in panhandler
 labels:
