@@ -7,7 +7,7 @@ label: ping URLs or IPs to get response results
 description: |
   ping a list of URLs or IPs to get min/max/avg response times.
   Input can be a user entered list or file
-type: python
+type: python3
 
 # grouping of like snippets for dynamic menu creation in panhandler
 labels:
