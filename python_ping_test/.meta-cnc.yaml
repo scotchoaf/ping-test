@@ -43,5 +43,5 @@ variables:
 
 snippets:
   - name: ping_test
-    image: scotchoaf/ping-test:dev
+    image: scotchoaf/ping_test:dev
     cmd: python3 ./ping_test.py
