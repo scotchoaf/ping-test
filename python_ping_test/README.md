@@ -1,19 +1,17 @@
 # Ping Test
 
-Requires root access to run
-
 Two options for the URL list:
 
-First is specifying the URL list as an input argument
+First is specifying the URL list as an input argument. Type = list.
+
 ```angular2
-sudo python3 ping-test.py --url url1.com,url2.com
+python3 ping-test.py -i list -l www.google.com,www.paloaltonetworks.com
 ```
 
-Second is adding entries to url_list.txt. This will will be read
-if no URLs are specified.
+Second is reading a text file. Type = file.
 
 ```angular2
-sudo python3 ping-test.py
+python3 ping-test.py -i file -f url_list.txt
 ```
 
 The output will show each URL along with min/avs/max rtt in ms.
@@ -30,4 +28,9 @@ www.google.com
   avg rtt is: 30.94 ms
   max rtt is: 34.5 ms
 ```
+
+### Error handling
+
+Error outputs will occur for DNS lookup errors and unreachable targets.
+The test will continue with the target output specifying the error.
 
