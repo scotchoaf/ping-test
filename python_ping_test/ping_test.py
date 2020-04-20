@@ -18,12 +18,13 @@
 import subprocess
 
 import click
+import os
 
 
 @click.command()
-@click.option("-i", "--input_type", help="input type file or list", type=str, default='file')
-@click.option("-f", "--file_name", help="read list from file", type=str, default=None)
-@click.option("-l", "--url_list", help="url list to ping", type=str, default=None)
+@click.option("-i", "--input_type", help="input type file or list", type=str, default=lambda: os.environ.get('input_type', ''))
+@click.option("-f", "--file_name", help="read list from file", type=str, default=lambda: os.environ.get('file_namne', ''))
+@click.option("-l", "--url_list", help="url list to ping", type=str, default=lambda: os.environ.get('url_list', ''))
 def cli(input_type, file_name, url_list):
     """
     using a list of URLs or IP address to run ping and capture min/avg/max rtt

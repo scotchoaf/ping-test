@@ -5,13 +5,13 @@ Two options for the URL list:
 First is specifying the URL list as an input argument. Type = list.
 
 ```angular2
-python3 ping-test.py -i list -l www.google.com,www.paloaltonetworks.com
+python3 ping_test.py -i list -l www.google.com,www.paloaltonetworks.com
 ```
 
 Second is reading a text file. Type = file.
 
 ```angular2
-python3 ping-test.py -i file -f url_list.txt
+python3 ping_test.py -i file -f url_list.txt
 ```
 
 The output will show each URL along with min/avs/max rtt in ms.

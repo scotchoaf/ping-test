@@ -7,17 +7,12 @@ label: ping URLs or IPs to get response results
 description: |
   ping a list of URLs or IPs to get min/max/avg response times.
   Input can be a user entered list or file
-type: python3
+type: docker
 
 # grouping of like snippets for dynamic menu creation in panhandler
 labels:
   collection:
     - Prisma Access
-
-# ---------------------------------------------------------------------
-# end of preamble section
-
-# variables section
 
 variables:
   - name: input_type
@@ -46,15 +41,7 @@ variables:
       source: input_type
       value: file
 
-# ---------------------------------------------------------------------
-# end of variables section
-
-# snippets section
-# ---------------------------------------------------------------------
 snippets:
   - name: ping_test
-    file: ping_test.py
-    input_type: cli
-
-# ---------------------------------------------------------------------
-# end of snippets section
+    image: scotchoaf/ping-test:dev
+    cmd: python3 ./ping_test.py
