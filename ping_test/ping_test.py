@@ -40,7 +40,7 @@ def cli(input_type, file_name, url_list):
     if input_type == 'file':
         ping_list = []
         with open(file_name) as f:
-            print(f'\nreading target list from fle {file_name}\n')
+            print('\nreading target list from file\n')
             for line in f.readlines():
                 ping_list.append(line.rstrip())
 
