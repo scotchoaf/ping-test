@@ -24,22 +24,40 @@ import subprocess
 @click.option("-f", "--file_name", help="read list from file", type=str, default=None)
 @click.option("-l", "--url_list", help="url list to ping", type=str, default=None)
 
+
+
 def cli(input_type, file_name, url_list):
     """
-    process a list of url or ip targets and get ping results
+    using a list of URLs or IP address to run ping and capture min/avg/max rtt
+    input can be a file or user entered values
+    :param input_type: either file or list as data source
+    :param file_name: if type=file use this file containing the URL list
+    :param url_list: if type=list use manually entered comma-separated list of URLs
+    :return: None
     """
 
+    # if type=file read the file and generate a list of URLs to ping
+    # assumes file is a simple text file with one URL per row
     if input_type == 'file':
         ping_list = []
         with open(file_name) as f:
             print(f'\nreading target list from fle {file_name}\n')
             for line in f.readlines():
                 ping_list.append(line.rstrip())
-    else:
+
+    # if type=list read in the user-entered list of values
+    elif input_type == 'list':
         ping_list = url_list.split(',')
         print('\n')
 
+    # type must be file or list. exit if other value
+    else:
+        print('input type unknown. Type must be file or list')
+        exit()
+
     for target in ping_list:
+        # iterate through the list values and ping the target
+        # using harcoded 5 ping attempts
         try:
             response = subprocess.run(
                 ['ping', '-c', '5', target],
@@ -50,13 +68,17 @@ def cli(input_type, file_name, url_list):
         except subprocess.CalledProcessError:
             response = None
 
+        # convert the response output to a string to get the min/avg/max values
         response_output = str(response)
         print(f'{target}')
 
+        # return code 0 = successful ping
         if response.returncode == 0:
             response_rtt = {}
             # this is a manual parse of the ping response message getting the min/avg/max output
             # there may be dependencies on the output view based on OS
+            # first split is the summary results, second remove the ' ms' at the end
+            # third split parses out the min/avg/max values to add to the dict
             response_rtt['min'] = (response_output.split(' = ')[1].split(' '))[0].split('/')[0]
             response_rtt['avg'] = (response_output.split(' = ')[1].split(' '))[0].split('/')[1]
             response_rtt['max'] = (response_output.split(' = ')[1].split(' '))[0].split('/')[2]
@@ -65,12 +87,15 @@ def cli(input_type, file_name, url_list):
             print(f"  avg rtt is: {response_rtt['avg']} ms")
             print(f"  max rtt is: {response_rtt['max']} ms\n")
 
+        # return code 2 returned if ping timeouts occurred due to slow network in unreachable IP address
         elif response.returncode == 2:
             print('  Error: ping request timeouts occurred')
 
+        # return code 68 is based on DNS lookup errors: cannot resolve address
         elif response.returncode == 68:
             print(f'  {response.stderr.decode()}')
 
+        # any other error condition lands here with a catch-all message
         else:
             print(' Error processing pings. Check inputs')
 
