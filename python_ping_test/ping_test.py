@@ -69,7 +69,7 @@ def cli(input_type, file_name, url_list):
 
         # convert the response output to a string to get the min/avg/max values
         response_output = str(response)
-        # print(response_output)  # use to check stdout and stderr response outputs
+        print(response_output)  # use to check stdout and stderr response outputs
         print(f'{target}')
 
         # return code 0 = successful ping
