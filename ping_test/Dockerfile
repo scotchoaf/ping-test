@@ -9,4 +9,5 @@ COPY requirements.txt /app/requirements.txt
 
 RUN apt-get -y update && pip install --upgrade pip \
     && pip install --no-cache-dir -r app/requirements.txt \
-    && apt-get -y install iputils-ping
+    && apt-get -y install iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
