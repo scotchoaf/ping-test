@@ -1,7 +1,5 @@
 # Pycharm
 .idea/
-ping_test/env
-ping_test_2/env
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
