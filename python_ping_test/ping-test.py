@@ -15,17 +15,15 @@
 
 # Authors: Scott Shoaf, Kenny Welshons
 
-import click
 import subprocess
+
+import click
 
 
 @click.command()
 @click.option("-i", "--input_type", help="input type file or list", type=str, default='file')
 @click.option("-f", "--file_name", help="read list from file", type=str, default=None)
 @click.option("-l", "--url_list", help="url list to ping", type=str, default=None)
-
-
-
 def cli(input_type, file_name, url_list):
     """
     using a list of URLs or IP address to run ping and capture min/avg/max rtt
@@ -77,7 +75,7 @@ def cli(input_type, file_name, url_list):
             response_rtt = {}
             # this is a manual parse of the ping response message getting the min/avg/max output
             # there may be dependencies on the output view based on OS
-            # first split is the summary results, second remove the ' ms' at the end
+            # first split is the summary results, second removes the ' ms' at the end
             # third split parses out the min/avg/max values to add to the dict
             response_rtt['min'] = (response_output.split(' = ')[1].split(' '))[0].split('/')[0]
             response_rtt['avg'] = (response_output.split(' = ')[1].split(' '))[0].split('/')[1]
@@ -87,11 +85,11 @@ def cli(input_type, file_name, url_list):
             print(f"  avg rtt is: {response_rtt['avg']} ms")
             print(f"  max rtt is: {response_rtt['max']} ms\n")
 
-        # return code 2 returned if ping timeouts occurred due to slow network in unreachable IP address
+        # return code 2 returned if ping timeouts occur due to slow network or unreachable IP address
         elif response.returncode == 2:
             print('  Error: ping request timeouts occurred')
 
-        # return code 68 is based on DNS lookup errors: cannot resolve address
+        # return code 68 is based on DNS lookup error: cannot resolve address
         elif response.returncode == 68:
             print(f'  {response.stderr.decode()}')
 
