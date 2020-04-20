@@ -69,7 +69,7 @@ def cli(input_type, file_name, url_list):
 
         # convert the response output to a string to get the min/avg/max values
         response_output = str(response)
-        print(response_output)
+        # print(response_output)  # use to check stdout and stderr response outputs
         print(f'{target}')
 
         # return code 0 = successful ping
@@ -89,15 +89,15 @@ def cli(input_type, file_name, url_list):
 
         # return code 2 returned if ping timeouts occur due to slow network or unreachable IP address
         elif response.returncode == 2:
-            print('  Error: ping request timeouts occurred')
+            print('  Error: ping request timeouts occurred\n')
 
         # return code 68 is based on DNS lookup error: cannot resolve address
-        elif response.returncode == 68:
-            print(f'  {response.stderr.decode()}')
+        elif response.returncode == 68 or response.returncode == 1:
+            print('  DNS lookup error: unknown host\n')
 
         # any other error condition lands here with a catch-all message
         else:
-            print(' Error processing pings. Check inputs')
+            print(' Error processing pings. Check inputs\n')
 
 
 if __name__ == '__main__':
