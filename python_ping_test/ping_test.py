@@ -87,12 +87,12 @@ def cli(input_type, file_name, url_list):
             print(f"  avg rtt is: {response_rtt['avg']} ms")
             print(f"  max rtt is: {response_rtt['max']} ms\n")
 
-        # return code 2 returned if ping timeouts occur due to slow network or unreachable IP address
-        elif response.returncode == 2:
+        # return code 1 returned if ping timeouts occur due to slow network or unreachable IP address
+        elif response.returncode == 1:
             print('  Error: ping request timeouts occurred\n')
 
-        # return code 68 or 1 is based on DNS lookup error: cannot resolve address
-        elif response.returncode == 68 or response.returncode == 1:
+        # return 2 is based on DNS lookup error: cannot resolve address
+        elif response.returncode == 2:
             print('  DNS lookup error: unknown host\n')
 
         # any other error condition lands here with a catch-all message
