@@ -33,4 +33,3 @@ www.google.com
 
 Error outputs will occur for DNS lookup errors and unreachable targets.
 The test will continue with the target output specifying the error.
-
